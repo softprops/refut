@@ -18,7 +18,7 @@ maintenance = { status = "actively-developed" }
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [features]
 default = ["dep:log", "dep:rand"]
-wasm-bindgen = ["getrandom/wasm-bindgen", "futures-timer/wasm-bindgen"]
+wasm-bindgen = ["getrandom/js", "futures-timer/wasm-bindgen"]
 
 [dependencies]
 log = { version = "0.4", optional = true }

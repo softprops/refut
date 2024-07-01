@@ -43,7 +43,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Test
-      run: cargo build --target wasm32-unknown-unknown
+      run: cargo build --target wasm32-unknown-unknown --features wasm-bindgen
 
   test:
     needs: [codestyle, lint, compile]

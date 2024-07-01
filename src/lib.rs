@@ -129,7 +129,7 @@ where
 ///     |input: u32| async move { Ok::<u32, u32>(input + 1) },
 ///     |result: &u32| if *result < 2 { Some(*result) } else { None },
 ///     |err: &u32| *err > 1,
-///     0 as u32,
+///     0,
 /// );
 /// ```
 pub async fn collect_and_retry<T, C, D, S>(
@@ -727,7 +727,7 @@ mod tests {
             .collect(
                 |input: u32| async move { Ok::<u32, ()>(input + 1) },
                 |result: &u32| if *result < 2 { Some(*result) } else { None },
-                0 as u32,
+                0,
             )
             .await;
         assert_eq!(result, Ok(vec![1, 2]));
@@ -740,7 +740,7 @@ mod tests {
             .collect(
                 |input: u32| async move { Ok::<u32, ()>(input + 1) },
                 |result: &u32| if *result < 1 { Some(*result) } else { None },
-                0 as u32,
+                0,
             )
             .await;
         assert_eq!(result, Ok(vec![1]));
@@ -755,7 +755,7 @@ mod tests {
                 |input: u32| async move { Ok::<u32, u32>(input + 1) },
                 |result: &u32| if *result < 2 { Some(*result) } else { None },
                 |err: &u32| *err > 1,
-                0 as u32,
+                0,
             )
             .await;
         assert_eq!(result, Ok(vec![1, 2]));
@@ -770,7 +770,7 @@ mod tests {
                 |input: u32| async move { Ok::<u32, u32>(input + 1) },
                 |result: &u32| if *result < 1 { Some(*result) } else { None },
                 |err: &u32| *err > 1,
-                0 as u32,
+                0,
             )
             .await;
         assert_eq!(result, Ok(vec![1]));
@@ -788,7 +788,7 @@ mod tests {
                 },
                 |result: &u32| if *result < 2 { Some(*result) } else { None },
                 |err: &u32| *err == 0,
-                0 as u32,
+                0,
             )
             .await;
         // Default for retry policy is 5, so we end up with the task being
@@ -805,7 +805,7 @@ mod tests {
                 |input: u32| async move { Err::<u32, u32>(input + 1) },
                 |result: &u32| if *result < 1 { Some(*result) } else { None },
                 |err: &u32| *err > 1,
-                0 as u32,
+                0,
             )
             .await;
         assert_eq!(result, Err(1));
