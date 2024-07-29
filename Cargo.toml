@@ -10,11 +10,7 @@ repository = "https://github.com/softprops/again"
 keywords = ["retry", "futures", "futures-retry"]
 license = "MIT"
 readme = "README.md"
-categories = [
-  "asynchronous",
-  "wasm",
-  "web-programming"
-]
+categories = ["asynchronous", "wasm", "web-programming"]
 
 [badges]
 maintenance = { status = "actively-developed" }
@@ -22,16 +18,24 @@ maintenance = { status = "actively-developed" }
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [features]
 default = ["log", "rand"]
-wasm-bindgen = ["getrandom/wasm-bindgen"]
 
 [dependencies]
 log = { version = "0.4", optional = true }
 rand = { version = "0.8", optional = true }
 getrandom = { version = "0.2", optional = true }
-wasm-timer = "0.2"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web-sys = "0.3.69"
+wasm-bindgen-futures = "0.4.42"
+getrandom = { version = "0.2", features = ["js"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+async-std = "1.12.0"
 
 [dev-dependencies]
 approx = "0.5"
 pretty_env_logger = "0.4"
 reqwest = "0.11"
-tokio = { version = "1", features = ["rt-multi-thread","macros"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
