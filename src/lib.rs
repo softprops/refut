@@ -67,7 +67,7 @@
 use rand::{distributions::OpenClosed01, thread_rng, Rng};
 use std::{cmp::min, future::Future, time::Duration};
 
-mod delay;
+pub mod delay;
 
 use delay::Delay;
 
@@ -637,6 +637,7 @@ where
 }
 
 #[cfg(test)]
+#[cfg(not(target_arch = "wasm32"))]
 mod tests {
     use super::*;
     use approx::assert_relative_eq;
